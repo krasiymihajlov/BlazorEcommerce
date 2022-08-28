@@ -19,5 +19,8 @@ namespace E_commerceShop.Shared
 
         public string Author { get; set; } = string.Empty;
         public int CatalogNumber { get; set; }
+
+        public int CategoryId { get; set; }
+        public Category? Category { get; set; }
     }
 }

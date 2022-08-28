@@ -2,7 +2,7 @@ global using E_commerceShop.Shared;
 //global using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using E_commerceShop.Server.Data;
-
+using E_commerceShop.Server.Services.ProductService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +18,8 @@ builder.Services.AddRazorPages();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddScoped<IProductService, ProductService>();
 
 var app = builder.Build();
 

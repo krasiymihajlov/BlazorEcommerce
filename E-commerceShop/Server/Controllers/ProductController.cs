@@ -1,5 +1,5 @@
 ﻿using E_commerceShop.Server.Data;
-using Microsoft.AspNetCore.Http;
+using E_commerceShop.Server.Services.ProductService;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,18 +9,25 @@ namespace E_commerceShop.Server.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
-        private readonly DataContext context;
+        private readonly IProductService productService;
 
-        public ProductController(DataContext context)
+        public ProductController(IProductService productService)
         {
-            this.context = context;
+            this.productService = productService;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetProduct()
+        public async Task<ActionResult<ServiceResponse<List<Product>>>> GetProducts()
         {
-            var products = await this.context.Products.ToListAsync();
-            return Ok(products);
+            var response = await this.productService.GetProductsAsync();
+            return Ok(response);
+        }
+
+        [HttpGet("{productId}")]
+        public async Task<ActionResult<ServiceResponse<Product>>> GetProduct(int productId)
+        {
+            var response = await this.productService.GetProductAsync(productId);
+            return Ok(response);
         }
     }
 }
